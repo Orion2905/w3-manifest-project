@@ -7,17 +7,17 @@ set -e  # Exit on any error
 
 # Configuration
 PROJECT_NAME="w3manifest"
-RESOURCE_GROUP="rg-${PROJECT_NAME}"
-LOCATION="North Europe"  # Changed from West Europe
+RESOURCE_GROUP="rg-w3-manifest"  # Using existing resource group
+LOCATION="West Europe"  # Changed to match existing resources location
 ENVIRONMENT="prod"
 
-# Resource Names
-APP_SERVICE_PLAN="${PROJECT_NAME}-plan-${ENVIRONMENT}"
-BACKEND_APP="${PROJECT_NAME}-backend-${ENVIRONMENT}"
-FRONTEND_APP="${PROJECT_NAME}-frontend-${ENVIRONMENT}"
-SQL_SERVER="${PROJECT_NAME}-sqlserver-${ENVIRONMENT}"
-SQL_DATABASE="${PROJECT_NAME}-db"
-STORAGE_ACCOUNT="${PROJECT_NAME}storage2${ENVIRONMENT}"
+# Resource Names (matching existing resources)
+APP_SERVICE_PLAN="w3manifest-asp-${ENVIRONMENT}"
+BACKEND_APP="w3manifest-backend-${ENVIRONMENT}"
+FRONTEND_APP="w3manifest-frontend-${ENVIRONMENT}"
+SQL_SERVER="w3manifest-sqlserver-${ENVIRONMENT}"
+SQL_DATABASE="w3manifest-db"
+STORAGE_ACCOUNT="w3manifeststorage${ENVIRONMENT}"
 
 # SQL Configuration
 SQL_ADMIN_USER="w3admin"
