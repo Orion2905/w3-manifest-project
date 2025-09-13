@@ -1,3 +1,10 @@
+# Deployment files
+*-deploy.zip
+*.zip
+
+# Azure credentials (local only)  
+azure-credentials-local.md
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
