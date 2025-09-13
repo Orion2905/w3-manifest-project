@@ -25,6 +25,7 @@ interface UserFormProps {
   onSuccess: (message: string) => void;
   onCancel: () => void;
   onError: (error: string) => void;
+  isOpen?: boolean; // Added missing prop
 }
 
 interface FormData {
@@ -52,7 +53,8 @@ const UserForm: React.FC<UserFormProps> = ({
   user,
   onSuccess,
   onCancel,
-  onError
+  onError,
+  isOpen = true // Default to true if not provided
 }) => {
   const [formData, setFormData] = useState<FormData>({
     username: '',
@@ -242,7 +244,7 @@ const UserForm: React.FC<UserFormProps> = ({
         }
 
         const response = await userService.updateUser(user.id, updateData);
-        onSave(response.user);
+        onSuccess('Utente aggiornato con successo');
       } else {
         // Create user
         const createData: CreateUserData = {
@@ -259,10 +261,10 @@ const UserForm: React.FC<UserFormProps> = ({
         };
 
         const response = await userService.createUser(createData);
-        onSave(response.user);
+        onSuccess('Utente creato con successo');
       }
 
-      onClose();
+      onCancel();
     } catch (err: any) {
       const errorMessage = err.message || `Errore durante ${isEditMode ? 'l\'aggiornamento' : 'la creazione'} dell'utente`;
       if (onError) {
@@ -298,7 +300,7 @@ const UserForm: React.FC<UserFormProps> = ({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={onClose}
+                onClick={onCancel}
                 className="text-gray-400 hover:text-gray-600"
               >
                 <XMarkIcon className="h-5 w-5" />
@@ -590,7 +592,7 @@ const UserForm: React.FC<UserFormProps> = ({
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={onClose}
+                  onClick={onCancel}
                   disabled={loading}
                 >
                   Annulla

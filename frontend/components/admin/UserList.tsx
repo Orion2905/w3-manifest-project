@@ -23,28 +23,25 @@ import {
 } from '@heroicons/react/24/outline';
 
 interface UserListProps {
-  users?: User[];
-  loading?: boolean;
+  showFilters?: boolean;
   filters?: {
     search: string;
     role: string;
     status: string;
     verified: string;
   };
-  pagination?: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
+  users?: User[];
+  loading?: boolean;
+  pagination?: any;
   onFiltersChange?: (filters: any) => void;
   onPaginationChange?: (page: number) => void;
   onEditUser?: (user: User) => void;
-  onUserActions?: (user: User) => void;
+  onUserActions?: (action: string, user: User) => void;
   onRefresh?: () => void;
   onUserSelect?: (user: User) => void;
   onUserDelete?: (user: User) => void;
   onCreateUser?: () => void;
+  onUserEdit?: (user: User) => void;
   refreshTrigger?: number;
 }
 
@@ -61,6 +58,7 @@ const UserList: React.FC<UserListProps> = ({
   onUserSelect,
   onUserDelete,
   onCreateUser,
+  onUserEdit,
   refreshTrigger = 0
 }) => {
   const [users, setUsers] = useState<User[]>(propUsers || []);
@@ -75,11 +73,19 @@ const UserList: React.FC<UserListProps> = ({
     has_prev: false
   });
   // Filters state - use props if available, otherwise internal state
-  const [filters, setFilters] = useState<UserFilters>(propFilters || {
-    search: '',
-    role: '',
-    status: '',
-    verified: ''
+  const [filters, setFilters] = useState<UserFilters>(() => {
+    if (propFilters) {
+      return {
+        ...propFilters,
+        status: propFilters.status as 'active' | 'inactive' | 'locked' | 'verified' | 'unverified' | undefined
+      };
+    }
+    return {
+      search: '',
+      role: '',
+      status: undefined,
+      verified: undefined
+    };
   });
 
   // Sync with props
@@ -92,7 +98,11 @@ const UserList: React.FC<UserListProps> = ({
 
   useEffect(() => {
     if (propFilters) {
-      setFilters(propFilters);
+      const typedFilters: UserFilters = {
+        ...propFilters,
+        status: propFilters.status as 'active' | 'inactive' | 'locked' | 'verified' | 'unverified' | undefined
+      };
+      setFilters(typedFilters);
     }
   }, [propFilters]);
 
@@ -108,13 +118,6 @@ const UserList: React.FC<UserListProps> = ({
       });
     }
   }, [propPagination]);
-  const [filters, setFilters] = useState<UserFilters>({
-    search: '',
-    role: '',
-    status: undefined,
-    page: 1,
-    per_page: 20
-  });
   
   const [roles, setRoles] = useState<Role[]>([]);
   const [showFilters, setShowFilters] = useState(false);

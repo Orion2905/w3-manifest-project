@@ -58,8 +58,12 @@ const UserManagement: React.FC<UserManagementProps> = ({ className = '' }) => {
   const loadUsers = async () => {
     try {
       setLoading(true);
-      const response = await userService.getUsers({
+      const typedFilters = {
         ...filters,
+        status: filters.status as 'active' | 'inactive' | 'locked' | 'verified' | 'unverified' | undefined
+      };
+      const response = await userService.getUsers({
+        ...typedFilters,
         page: pagination.page,
         limit: pagination.limit
       });

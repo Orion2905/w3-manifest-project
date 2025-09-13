@@ -15,7 +15,13 @@ export const orderService = {
     });
 
     if (filters) {
-      if (filters.status) params.append('status', filters.status);
+      if (filters.status) {
+        if (Array.isArray(filters.status)) {
+          filters.status.forEach(status => params.append('status', status));
+        } else {
+          params.append('status', filters.status);
+        }
+      }
       if (filters.customer) params.append('customer', filters.customer);
       if (filters.date_from) params.append('date_from', filters.date_from);
       if (filters.date_to) params.append('date_to', filters.date_to);
