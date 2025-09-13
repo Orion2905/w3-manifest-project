@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URL=postgresql://user:password@db:5432/w3manifest
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+    networks:
+      - w3-manifest-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      # Adjust based on chosen frontend framework
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - w3-manifest-network
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=w3manifest
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - w3-manifest-network
+
+volumes:
+  postgres_data:
+
+networks:
+  w3-manifest-network:
+    driver: bridge

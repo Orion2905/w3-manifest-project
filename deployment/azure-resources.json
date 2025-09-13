@@ -1,0 +1,201 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectName": {
+      "type": "string",
+      "defaultValue": "w3manifest",
+      "metadata": {
+        "description": "Nome base del progetto"
+      }
+    },
+    "environment": {
+      "type": "string",
+      "defaultValue": "prod",
+      "allowedValues": ["dev", "test", "prod"],
+      "metadata": {
+        "description": "Ambiente di deployment"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location per tutte le risorse"
+      }
+    },
+    "sqlAdminUsername": {
+      "type": "string",
+      "defaultValue": "w3admin",
+      "metadata": {
+        "description": "Username amministratore SQL Server"
+      }
+    },
+    "sqlAdminPassword": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password amministratore SQL Server"
+      }
+    },
+    "appServicePlanSku": {
+      "type": "string",
+      "defaultValue": "B1",
+      "allowedValues": ["B1", "B2", "B3", "S1", "S2", "S3", "P1", "P2", "P3"],
+      "metadata": {
+        "description": "SKU dell'App Service Plan"
+      }
+    }
+  },
+  "variables": {
+    "appServicePlanName": "[concat(parameters('projectName'), '-asp-', parameters('environment'))]",
+    "backendAppName": "[concat(parameters('projectName'), '-backend-', parameters('environment'))]",
+    "frontendAppName": "[concat(parameters('projectName'), '-frontend-', parameters('environment'))]",
+    "sqlServerName": "[concat(parameters('projectName'), '-sql-', parameters('environment'))]",
+    "databaseName": "[concat(parameters('projectName'), '-db')]",
+    "storageAccountName": "[concat(parameters('projectName'), 'storage', parameters('environment'))]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2021-02-01",
+      "name": "[variables('appServicePlanName')]",
+      "location": "[parameters('location')]",
+      "kind": "linux",
+      "properties": {
+        "reserved": true
+      },
+      "sku": {
+        "name": "[parameters('appServicePlanSku')]"
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2021-02-01",
+      "name": "[variables('backendAppName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+        "siteConfig": {
+          "linuxFxVersion": "PYTHON|3.11",
+          "appSettings": [
+            {
+              "name": "ENVIRONMENT",
+              "value": "[parameters('environment')]"
+            },
+            {
+              "name": "DATABASE_URL",
+              "value": "[concat('mssql+pyodbc://', parameters('sqlAdminUsername'), ':', parameters('sqlAdminPassword'), '@', variables('sqlServerName'), '.database.windows.net:1433/', variables('databaseName'), '?driver=ODBC+Driver+17+for+SQL+Server')]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2021-02-01",
+      "name": "[variables('frontendAppName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+        "[resourceId('Microsoft.Web/sites', variables('backendAppName'))]"
+      ],
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+        "siteConfig": {
+          "linuxFxVersion": "NODE|18-lts",
+          "appSettings": [
+            {
+              "name": "REACT_APP_API_URL",
+              "value": "[concat('https://', variables('backendAppName'), '.azurewebsites.net')]"
+            },
+            {
+              "name": "NODE_ENV",
+              "value": "production"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Sql/servers",
+      "apiVersion": "2021-11-01",
+      "name": "[variables('sqlServerName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "administratorLogin": "[parameters('sqlAdminUsername')]",
+        "administratorLoginPassword": "[parameters('sqlAdminPassword')]",
+        "version": "12.0"
+      },
+      "resources": [
+        {
+          "type": "firewallRules",
+          "apiVersion": "2021-11-01",
+          "name": "AllowAzureServices",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+          ],
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+          }
+        },
+        {
+          "type": "databases",
+          "apiVersion": "2021-11-01",
+          "name": "[variables('databaseName')]",
+          "location": "[parameters('location')]",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('sqlServerName'))]"
+          ],
+          "sku": {
+            "name": "Basic",
+            "tier": "Basic",
+            "capacity": 5
+          },
+          "properties": {
+            "collation": "SQL_Latin1_General_CP1_CI_AS"
+          }
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2021-08-01",
+      "name": "[variables('storageAccountName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "kind": "StorageV2",
+      "properties": {
+        "supportsHttpsTrafficOnly": true,
+        "allowBlobPublicAccess": false
+      }
+    }
+  ],
+  "outputs": {
+    "backendUrl": {
+      "type": "string",
+      "value": "[concat('https://', variables('backendAppName'), '.azurewebsites.net')]"
+    },
+    "frontendUrl": {
+      "type": "string",
+      "value": "[concat('https://', variables('frontendAppName'), '.azurewebsites.net')]"
+    },
+    "sqlServerFqdn": {
+      "type": "string",
+      "value": "[concat(variables('sqlServerName'), '.database.windows.net')]"
+    },
+    "databaseName": {
+      "type": "string",
+      "value": "[variables('databaseName')]"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "value": "[variables('storageAccountName')]"
+    }
+  }
+}
