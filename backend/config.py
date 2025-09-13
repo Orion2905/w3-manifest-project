@@ -3,34 +3,20 @@ from datetime import timedelta
 from sqlalchemy.pool import QueuePool
 
 class Config:
-    """Base configuration class with Azure SQL Server."""
+    """Base configuration class with Azure SQL Server using pymssql (no ODBC drivers needed)."""
     
     # Azure SQL Server Configuration - W3 Manifest Database
-    DB_USER = os.environ.get("DB_USER", "w3admin")
-    DB_PASSWORD = os.environ.get("DB_PASSWORD", "W3Manifest2024!")
-    DB_SERVER = os.environ.get("DB_SERVER", "w3manifest-sqlserver-prod.database.windows.net")
-    DB_NAME = os.environ.get("DB_NAME", "w3manifest-db")
-    DB_DRIVER = "ODBC+Driver+18+for+SQL+Server"
-    
-    import os
-from datetime import timedelta
-from sqlalchemy.pool import QueuePool
-
-class Config:
-    """Base configuration class - SEMPRE usa Azure SQL Server."""
-    
-    # Azure SQL Server Configuration - UNICA configurazione database
     DB_USER = "w3admin"
     DB_PASSWORD = "W3Manifest2024!"
     DB_SERVER = "w3manifest-sqlserver-prod.database.windows.net"
     DB_NAME = "w3manifest-db"
-    DB_DRIVER = "ODBC+Driver+18+for+SQL+Server"
     
-    # Database URI - SEMPRE Azure
+    # Use pymssql instead of pyodbc - no ODBC drivers needed
     SQLALCHEMY_DATABASE_URI = (
-        f"mssql+pyodbc://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:1433/"
-        f"{DB_NAME}?driver={DB_DRIVER}&Encrypt=yes&TrustServerCertificate=no"
+        f"mssql+pymssql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:1433/"
+        f"{DB_NAME}?charset=utf8"
     )
+    
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {
         "pool_size": 5,
@@ -44,26 +30,6 @@ class Config:
     
     # Application settings
     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
-    DEBUG = False
-    TESTING = False
-    # Always use Azure - override any environment variable
-    SQLALCHEMY_DATABASE_URI = (
-        "mssql+pyodbc://w3admin:W3Manifest2024!@w3manifest-sqlserver-prod.database.windows.net:1433/"
-        "w3manifest-db?driver=ODBC+Driver+18+for+SQL+Server&Encrypt=yes&TrustServerCertificate=no"
-    )
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_ENGINE_OPTIONS = {
-        "pool_size": 5,
-        "max_overflow": 10,
-        "pool_recycle": 1800,
-        "pool_timeout": 30,
-        "poolclass": QueuePool,
-        "echo": False,
-        "future": True
-    }
-    
-    # Application
-    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
     DEBUG = False
     TESTING = False
     

@@ -1,0 +1,25 @@
+<step title="Incoming Request" date="2025-09-13T14:51:26.445" instance="054e68" url="/api/zipdeploy?isAsync=true&amp;deployer=GITHUB_ZIP_DEPLOY&amp;message=%7B%22type%22%3A%22deployment%22%2C%22sha%22%3A%22639e2a50770045e6c3ccaf9104d4cd8e7fd170a7%22%2C%22repoName%22%3A%22Orion2905%2Fw3-manifest-project%22%2C%22actor%22%3A%22AbruzzoDigitale%22%2C%22slotName%22%3A%22production%22%2C%22commitMessage%22%3A%22%F0%9F%94%A7%20Fix%20backend%20deployment%20issues%5Cn%5Cn-%20Add%20pyodbc%20dependency%20for%20SQL%20Server%20connectivity%5Cn-%20Add%20gunicorn%20for%20WSGI%20server%5Cn-%20Create%20startup.sh%20script%20for%20Azure%20App%20Service%5Cn-%20Configure%20Azure%20startup%20command%22%7D" method="POST" type="request" pid="768,1,20" Host="w3manifest-backend-prod.scm.azurewebsites.net" User-Agent="GITHUBACTIONS_DeployWebAppToAzure_7245af1dd98b14ce590b0bfc30453d7ca640d4b600cbd73db94d72a5639884b7" Authorization="Bea..." Content-Type="application/octet-stream" Cookie="ARRAffinity=054e68e4f06a3abf36846d5a25b939aad05f4601cbc4a2f4676cf33727589810;Path=/;HttpOnly;Secure;Domain=w3manifest-backend-prod.scm.azurewebsites.net; ARRAffinitySameSite=054e68e4f06a3abf36846d5a25b939aad05f4601cbc4a2f4676cf33727589810;Path=/;HttpOnly;SameSite=None;Secure;Domain=w3manifest-backend-prod.scm.azurewebsites.net" Transfer-Encoding="chunked" X-ARR-LOG-ID="2b4d7446-9539-4665-9026-0110cc20a5e3" CLIENT-IP="64.236.153.101:32769" X-SITE-DEPLOYMENT-ID="w3manifest-backend-prod" WAS-DEFAULT-HOSTNAME="w3manifest-backend-prod.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/zipdeploy?isAsync=true&amp;deployer=GITHUB_ZIP_DEPLOY&amp;message=%7B%22type%22%3A%22deployment%22%2C%22sha%22%3A%22639e2a50770045e6c3ccaf9104d4cd8e7fd170a7%22%2C%22repoName%22%3A%22Orion2905%2Fw3-manifest-project%22%2C%22actor%22%3A%22AbruzzoDigitale%22%2C%22slotName%22%3A%22production%22%2C%22commitMessage%22%3A%22%F0%9F%94%A7%20Fix%20backend%20deployment%20issues%5Cn%5Cn-%20Add%20pyodbc%20dependency%20for%20SQL%20Server%20connectivity%5Cn-%20Add%20gunicorn%20for%20WSGI%20server%5Cn-%20Create%20startup.sh%20script%20for%20Azure%20App%20Service%5Cn-%20Configure%20Azure%20startup%20command%22%7D" X-Client-IP="64.236.153.101" X-Client-Port="32769" >
+  <step title="Cleanup Xml Logs" date="2025-09-13T14:51:26.493" /><!-- duration: 13ms -->
+  <step title="ZipPushDeploy" date="2025-09-13T14:51:26.685" >
+    <step title="ZipDeploy. Extract zip. Remote build." date="2025-09-13T14:51:26.725" /><!-- duration: 10ms -->
+    <step title="None repository commit" date="2025-09-13T14:51:26.744" >
+      <step title="Commit id: 81a2578a-76a6-4d47-899f-68907a315366" date="2025-09-13T14:51:26.756" Message="N/A" AuthorName="N/A" AuthorEmail="N/A" /><!-- duration: 2ms -->
+    </step><!-- duration: 21ms -->
+    <step title="Starting PushDeployAsync" date="2025-09-13T14:51:26.774" /><!-- duration: 11ms -->
+    <step title="Writing artifact to /tmp/zipdeploy/963722b1-9eda-4066-b10f-3fd975cf114d.zip" date="2025-09-13T14:51:26.865" >
+      <step title="Writing multipart request body to /tmp/zipdeploy/963722b1-9eda-4066-b10f-3fd975cf114d.zip" date="2025-09-13T14:51:26.876" /><!-- duration: 10ms -->
+    </step><!-- duration: 2515ms -->
+    <step title="Removing previous build artifact&apos;s manifest file" date="2025-09-13T14:51:29.391" >
+      <step title="None repository commit" date="2025-09-13T14:51:29.788" >
+        <step title="Commit id: 81a2578a-76a6-4d47-899f-68907a315366" date="2025-09-13T14:51:29.806" Message="N/A" AuthorName="N/A" AuthorEmail="N/A" /><!-- duration: 3ms -->
+      </step><!-- duration: 23ms -->
+      <step title="Start deployment in the background" date="2025-09-13T14:51:29.814" >
+        <step title="None repository commit" date="2025-09-13T14:51:29.859" >
+          <step title="Commit id: 81a2578a-76a6-4d47-899f-68907a315366" date="2025-09-13T14:51:29.869" Message="N/A" AuthorName="N/A" AuthorEmail="N/A" /><!-- duration: 2ms -->
+        </step><!-- duration: 14ms -->
+        <step title="Acquiring Deployment Lock" date="2025-09-13T14:51:29.878" /><!-- duration: 6ms -->
+        <step title="Acquired Deployment Lock" date="2025-09-13T14:51:29.958" /><!-- duration: 3ms -->
+      </step><!-- duration: 414ms -->
+    </step><!-- duration: 845ms -->
+    <step title="Outgoing response" date="2025-09-13T14:51:30.246" type="response" statusCode="202" statusText="Accepted" /><!-- duration: 9ms -->
+  </step><!-- duration: 3590ms -->

@@ -1,0 +1,8 @@
+<step title="Incoming Request" date="2025-09-13T10:14:36.050" instance="054e68" url="/api/deployments/latest?deployer=GitHub&amp;time=2025-09-13_10-14-25Z" method="GET" type="request" pid="772,1,16" Host="w3manifest-backend-prod.scm.azurewebsites.net" User-Agent="Azure-WebSites-Controller/105.0.7.92" Authorization="Bas..." x-ms-request-id="dc4ca90f-00f6-41ba-b949-e73f66cb0a74" X-ARR-LOG-ID="dc4ca90f-00f6-41ba-b949-e73f66cb0a74" CLIENT-IP="20.105.232.50:4033" X-SITE-DEPLOYMENT-ID="w3manifest-backend-prod" WAS-DEFAULT-HOSTNAME="w3manifest-backend-prod.scm.azurewebsites.net" X-MS-PLATFORM-INTERNAL="True" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/deployments/latest?deployer=GitHub&amp;time=2025-09-13_10-14-25Z" X-Client-IP="20.105.232.50" X-Client-Port="4033" >
+  <step title="DeploymentService.GetResult" date="2025-09-13T10:14:36.081" >
+    <step title="DeploymentService.GetLatestDeployment" date="2025-09-13T10:14:36.168" >
+      <step title="DeploymentManager.GetResults" date="2025-09-13T10:14:36.173" /><!-- duration: 983ms -->
+    </step><!-- duration: 997ms -->
+  </step><!-- duration: 1097ms -->
+  <step title="Outgoing response" date="2025-09-13T10:14:37.196" type="response" statusCode="202" statusText="Accepted" /><!-- duration: 20ms -->
+</step><!-- duration: 1175ms -->
