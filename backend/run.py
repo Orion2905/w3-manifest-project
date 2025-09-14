@@ -17,33 +17,19 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 app = None
 
 try:
-    logger.info("Starting application initialization...")
-    from app import create_app
     app = create_app()
-    logger.info("✅ Application created successfully!")
-    
-    # Test database connection
-    with app.app_context():
-        try:
-            from app import db
-            # Try a simple database query
-            db.session.execute("SELECT 1").fetchone()
-            logger.info("✅ Database connection successful!")
-        except Exception as db_error:
-            logger.error(f"⚠️  Database connection failed: {db_error}")
-            # Don't fail the entire app - it can still serve health checks
-            
+    print("✅ App created successfully")
 except Exception as e:
-    logger.error(f"❌ Application initialization failed: {e}")
+    print(f"❌ Failed to create app: {e}")
     import traceback
     traceback.print_exc()
-    # Create a minimal fallback app
+    # Create a simple fallback app that just returns an error message
     from flask import Flask
     app = Flask(__name__)
     
     @app.route('/')
-    def fallback():
-        return {'status': 'error', 'message': 'Application failed to initialize'}, 500
+    def error():
+        return {'status': 'error', 'message': f'Application failed to initialize: {str(e)}'}, 500
 
 if __name__ == '__main__':
     if app:
