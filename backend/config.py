@@ -11,8 +11,9 @@ class Config:
     DB_SERVER = "w3manifest-sqlserver-prod.database.windows.net"
     DB_NAME = "w3manifest-db"
     
-    # Use pymssql instead of pyodbc - no ODBC drivers needed
-    SQLALCHEMY_DATABASE_URI = (
+    # Use environment variable if available, otherwise use default pymssql connection
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+        'SQLALCHEMY_DATABASE_URI',
         f"mssql+pymssql://{DB_USER}:{DB_PASSWORD}@{DB_SERVER}:1433/"
         f"{DB_NAME}?charset=utf8"
     )
