@@ -1,7 +1,0 @@
-<step title="Incoming Request" date="2025-09-13T10:13:25.787" instance="054e68" url="/api/settings" method="POST" type="request" pid="768,1,39" Host="w3manifest-backend-prod.scm.azurewebsites.net" User-Agent="Azure-WebSites-Controller/105.0.7.92" Authorization="Bas..." Content-Type="application/json" Expect="100-continue" Content-Length="24" x-ms-request-id="dc4ca90f-00f6-41ba-b949-e73f66cb0a74" X-ARR-LOG-ID="dc4ca90f-00f6-41ba-b949-e73f66cb0a74" CLIENT-IP="20.105.232.50:4033" X-SITE-DEPLOYMENT-ID="w3manifest-backend-prod" WAS-DEFAULT-HOSTNAME="w3manifest-backend-prod.scm.azurewebsites.net" X-MS-PLATFORM-INTERNAL="True" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/settings" X-Client-IP="20.105.232.50" X-Client-Port="4033" >
-  <step title="Cleanup Xml Logs" date="2025-09-13T10:13:25.804" /><!-- duration: 15ms -->
-  <step title="Acquiring Deployment Lock" date="2025-09-13T10:13:26.504" /><!-- duration: 3ms -->
-  <step title="Acquired Deployment Lock" date="2025-09-13T10:13:26.563" /><!-- duration: 3ms -->
-  <step title="Releasing Deployment Lock" date="2025-09-13T10:13:26.681" /><!-- duration: 3ms -->
-  <step title="Outgoing response" date="2025-09-13T10:13:26.724" type="response" statusCode="204" statusText="NoContent" /><!-- duration: 25ms -->
-</step><!-- duration: 965ms -->

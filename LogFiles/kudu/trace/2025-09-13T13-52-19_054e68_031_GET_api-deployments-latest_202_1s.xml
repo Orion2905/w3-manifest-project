@@ -1,9 +1,0 @@
-<step title="Incoming Request" date="2025-09-13T13:52:19.615" instance="054e68" url="/api/deployments/latest?deployer=GITHUB_ZIP_DEPLOY&amp;time=2025-09-13_13-49-57Z" method="GET" type="request" pid="768,1,37" Host="w3manifest-backend-prod.scm.azurewebsites.net" User-Agent="GITHUBACTIONS_DeployWebAppToAzure_7245af1dd98b14ce590b0bfc30453d7ca640d4b600cbd73db94d72a5639884b7" Authorization="Bea..." Content-Type="application/json; charset=utf-8" Cookie="ARRAffinity=054e68e4f06a3abf36846d5a25b939aad05f4601cbc4a2f4676cf33727589810;Path=/;HttpOnly;Secure;Domain=w3manifest-backend-prod.scm.azurewebsites.net; ARRAffinitySameSite=054e68e4f06a3abf36846d5a25b939aad05f4601cbc4a2f4676cf33727589810;Path=/;HttpOnly;SameSite=None;Secure;Domain=w3manifest-backend-prod.scm.azurewebsites.net" Content-Length="0" X-ARR-LOG-ID="6e6593c4-c7ac-405c-aa08-810fc367a7c4" CLIENT-IP="64.236.134.210:44050" X-SITE-DEPLOYMENT-ID="w3manifest-backend-prod" WAS-DEFAULT-HOSTNAME="w3manifest-backend-prod.scm.azurewebsites.net" X-Forwarded-Proto="https" X-AppService-Proto="https" X-Forwarded-TlsVersion="1.3" X-WAWS-Unencoded-URL="/api/deployments/latest?deployer=GITHUB_ZIP_DEPLOY&amp;time=2025-09-13_13-49-57Z" X-Client-IP="64.236.134.210" X-Client-Port="44050" >
-  <step title="Cleanup Xml Logs" date="2025-09-13T13:52:19.655" /><!-- duration: 12ms -->
-  <step title="DeploymentService.GetResult" date="2025-09-13T13:52:19.715" >
-    <step title="DeploymentService.GetLatestDeployment" date="2025-09-13T13:52:19.725" >
-      <step title="DeploymentManager.GetResults" date="2025-09-13T13:52:19.766" /><!-- duration: 904ms -->
-    </step><!-- duration: 987ms -->
-  </step><!-- duration: 1017ms -->
-  <step title="Outgoing response" date="2025-09-13T13:52:20.780" type="response" statusCode="202" statusText="Accepted" /><!-- duration: 2ms -->
-</step><!-- duration: 1187ms -->
