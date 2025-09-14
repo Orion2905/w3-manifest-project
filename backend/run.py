@@ -17,6 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 app = None
 
 try:
+    from app import create_app
     app = create_app()
     print("✅ App created successfully")
 except Exception as e:
